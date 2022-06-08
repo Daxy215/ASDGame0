@@ -28,14 +28,14 @@ private:
 	double DeltaTime = 0;
 
 	sf::RenderWindow* window;
-	
+
 	Terrain* TerrainData;
 	sf::Vector2f CameraLocation;
 	sf::Vector2f CameraDelta;
 
 
 	TownCentre* Town;
-	
+
 	//std::vector<Building*> Buildings;
 	std::vector<Building*> BuildingsRemovals;
 	//std::vector<Building*> Mines;
@@ -44,7 +44,7 @@ private:
 	//std::vector<Projectile*> Projectiles;
 	std::vector<Projectile*> ProjectileRemovals;
 
-	
+
 
 	FieldButton* CurrentUpgrade;
 
@@ -71,7 +71,7 @@ private:
 
 	void ProjectileCollision(Projectile* inst);
 
-	
+
 	void FindBuildingtoAttack(Soldier* inst);
 
 	void SpawnEnemies();
@@ -84,4 +84,3 @@ private:
 
 
 };
-

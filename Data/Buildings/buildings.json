@@ -13,10 +13,27 @@
         "Cost": 100,
         
         "Audios" : {
-			"Fire" : {
-				"SoundComponent": "ArrowFire"
-			}
-		}
+            "Fire" : {
+            "SoundComponent": "ArrowFire"
+          }
+        },
+
+        "Upgrades" : {
+          "Level2": {
+            "Damage": 20,
+            "Health": 130,
+            "Cost": 150
+          },
+          "Level3": {
+            "Damage": 25,
+            "Health": 135,
+            "Cost": 155
+          },
+          "Level4": {
+            "Speed": 50,
+            "Cost": 150
+          }
+        }
     },
     "TownCentre" : {
         "ComponentName": "",
@@ -32,10 +49,10 @@
         "Cost": 100,
         
         "Audios" : {
-			"Fire" : {
-				"SoundComponent": "ArrowFire"
-			}
-		}
+          "Fire" : {
+            "SoundComponent": "ArrowFire"
+          }
+        }
     },
     "Mine" : {
         "ComponentName": "Mine",
@@ -51,10 +68,10 @@
         "Cost": 150,
 
         "Audios" : {
-			"Fire" : {
-				"SoundComponent": "ArrowFire"
-			}
-		}
+          "Fire" : {
+            "SoundComponent": "ArrowFire"
+          }
+        }
     },
     "Mage" : {
         "ComponentName": "MageTower",
@@ -70,9 +87,9 @@
         "Cost": 150,
         
         "Audios" : {
-			"Fire" : {
-				"SoundComponent": "MagicFire"
-			}
-		}
+          "Fire" : {
+            "SoundComponent": "MagicFire"
+          }
+        }
     }
 }

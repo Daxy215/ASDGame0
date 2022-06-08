@@ -1,5 +1,6 @@
-#include "Soldier.h"
 #include <iostream>
+#include "Soldier.h"
+#include "LoaderManager.h"
 
 void Soldier::EntityLogic(double Deltatime)
 {
@@ -44,7 +45,21 @@ Soldier::Soldier(std::string inName, sf::Vector2f SpawnLocation, Entity* inTarge
 	
 	Loc = SpawnLocation;
 
-	if (inName == "Grunt")
+	Soldier* soldier = getLoaderManager().getSoldier(inName);
+
+	if(soldier == nullptr) {
+		std::cout << "[ERROR] Couldn't find a soldier with the name of: " << inName << " - Check the json file" << std::endl;
+
+		return;
+	}
+
+	Health = soldier->Health;
+	Attack = soldier->Attack;
+	size = soldier->size;
+	AttackDelay = soldier->AttackDelay;
+	Speed = soldier->Speed;
+
+	/*if (inName == "Grunt")
 	{
 		Health = 50;
 		Attack = 5;
@@ -77,11 +92,17 @@ Soldier::Soldier(std::string inName, sf::Vector2f SpawnLocation, Entity* inTarge
 		size = 6;
 		AttackDelay = 1.4;
 		Speed = 95;
-	}
-
-
+	}*/
 
 	Components.push_back(new Component(inName));
+}
+
+Soldier::Soldier(std::string name, int health, int attack, int size, float attackDelay, int speed) : Entity(name) {
+	Health = health;
+	Attack = attack;
+	this->size = size;
+	AttackDelay = attackDelay;
+	Speed = speed;
 }
 
 Soldier::~Soldier()

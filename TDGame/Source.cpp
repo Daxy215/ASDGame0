@@ -2,24 +2,23 @@
 #include "MainMenu.h"
 #include <iostream>
 #include "Editor.h"
-#include "BuildingManager.h"
+#include "LoaderManager.h"
 
 int main() {
 	int choice = 0;
-	//MainMenu* Menu = new MainMenu();
-	//choice = Menu->MenuLoop();
+	MainMenu* Menu = new MainMenu();
+	choice = Menu->MenuLoop();
 
+	//ConfigData conf = getConfiguration();
 
-	ConfigData conf = getConfiguration();
-
-
-	choice = conf.Choice;//temp
+	//choice = conf.Choice;//temp
 
 	if (choice == 0) {
 		Anim::LoadAllAnims();
 		SoundData::LoadAllSounds();
 		Building::LoadAllBuildings();
-		getBuildingManager().loadBuildings();
+		getLoaderManager().loadBuildings();
+		getLoaderManager().loadSoliders();
 
 		GameInstance* Game = new GameInstance();
 		Game->GameLoop();
@@ -35,8 +34,10 @@ int main() {
 		Game->GameLoop();
 	}
 
+#ifdef NDEBUG
 
-
+	
+#else
 	//particle editor
 	if (choice == 2)
 	{
@@ -45,5 +46,5 @@ int main() {
 		Editor* editor = new Editor();
 		editor->RunEditor(choice);
 	}
-
+#endif
 }

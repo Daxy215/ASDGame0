@@ -1,8 +1,8 @@
 #include <json/json.h>
 #include <fstream>
-#include "BuildingManager.h"
+#include "LoaderManager.h"
 
-void BuildingManager::loadBuildings() {
+void LoaderManager::loadBuildings() {
 	//Loading the data file.
 	Json::Value cfg_root = "";
 	std::ifstream cfgfile("Data/Buildings/buildings.json");
@@ -47,7 +47,28 @@ void BuildingManager::loadBuildings() {
 	}
 }
 
-Building* BuildingManager::getBuilding(std::string name) {
+void LoaderManager::loadSoliders() {
+	//Loading the data file.
+	Json::Value cfg_root = "";
+	std::ifstream cfgfile("Data/SoldiersData.json");
+
+	//Reading it as json.
+	cfgfile >> cfg_root;
+
+	for (Json::Value::const_iterator itr = cfg_root.begin(); itr != cfg_root.end(); itr++) {
+		std::string soldierName = itr.name();
+
+		int health = cfg_root[soldierName]["Health"].asInt();
+		int attack = cfg_root[soldierName]["Attack"].asInt();
+		int size = cfg_root[soldierName]["Size"].asInt();
+		float attackDelay = cfg_root[soldierName]["AttackDelay"].asFloat();
+		int speed = cfg_root[soldierName]["Speed"].asInt();
+
+		soldiers.push_back(new Soldier(soldierName, health, attack, size, attackDelay, speed));
+	}
+}
+
+Building* LoaderManager::getBuilding(std::string name) {
 	for (int i = 0; i < buildings.size(); i++) {
 		if (buildings[i]->Name == name) {
 			return buildings[i];
@@ -57,7 +78,17 @@ Building* BuildingManager::getBuilding(std::string name) {
 	return nullptr;
 }
 
-BuildingManager& getBuildingManager() {
-	static BuildingManager manager;
+Soldier* LoaderManager::getSoldier(std::string name) {
+	for (int i = 0; i < soldiers.size(); i++) {
+		if (soldiers[i]->Name == name) {
+			return soldiers[i];
+		}
+	}
+
+	return nullptr;
+}
+
+LoaderManager& getLoaderManager() {
+	static LoaderManager manager;
 	return manager;
 }

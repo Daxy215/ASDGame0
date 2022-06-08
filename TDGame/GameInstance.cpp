@@ -1,7 +1,7 @@
 #include <chrono>
 #include "GameInstance.h"
 #include <stdlib.h>
-#include "BuildingManager.h"
+#include "LoaderManager.h"
 
 void GameInstance::GoldCalulation(double DeltaTime)
 {
@@ -42,44 +42,53 @@ void GameInstance::HandleButtons(double DeltaTime)
 
     //}
 
-
-
     if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && MouseCooldown<=0)
     {
         MouseCooldown = 0.1;
         if (UI->StandardTowerButton.CallIfHovered())
         {
             SetObjectToTower();
-            curBuilding = getBuildingManager().getBuilding(CurrentPlaceObject);   
+            curBuilding = getLoaderManager().getBuilding(CurrentPlaceObject);   
         }
         else if (UI->MineButton.CallIfHovered())
         {
             SetObjectToMine();
-            curBuilding = getBuildingManager().getBuilding(CurrentPlaceObject);
+            curBuilding = getLoaderManager().getBuilding(CurrentPlaceObject);
         }
         else if (UI->MageButton.CallIfHovered())
         {
             SetObjectToMage();
-            curBuilding = getBuildingManager().getBuilding(CurrentPlaceObject);
+            curBuilding = getLoaderManager().getBuilding(CurrentPlaceObject);
         }
         else
         {
             //upgrade
-            if ((Building::GetIndexOfHoveredTower(GameData::Buildings, (sf::Vector2f)sf::Mouse::getPosition() / Camera::Zoom - Camera::Location))!=-1)
-            {
+            if ((Building::GetIndexOfHoveredTower(GameData::Buildings, (sf::Vector2f)sf::Mouse::getPosition() / Camera::Zoom - Camera::Location)) != -1) {
+                //Testing
+                if (CurrentUpgrade != nullptr) {
+                    Building* b = GameData::Buildings[Building::GetIndexOfHoveredTower(GameData::Buildings, (sf::Vector2f)sf::Mouse::getPosition() / Camera::Zoom - Camera::Location)];
+
+                    if (Gold >= b->UpgradeCost()) {
+                        Gold -= b->UpgradeCost();
+                        b->Upgrade();
+                    }
+                }
+
+                CurrentUpgrade = nullptr;
                 sf::Vector2i bLocT = (sf::Vector2i)GameData::Buildings.at(Building::GetIndexOfHoveredTower(GameData::Buildings, (sf::Vector2f)sf::Mouse::getPosition() / Camera::Zoom - Camera::Location))->Loc;
-               CurrentUpgrade = new FieldButton(bLocT,bLocT+sf::Vector2i(128,128), "UpgradeButton.png", 80);
-            }
+                CurrentUpgrade = new FieldButton(bLocT,bLocT+sf::Vector2i(128,128), "UpgradeButton.png", 80);
+            } 
             else if (CurrentPlaceObject!="")
-{
-                //Building* curBuilding = getBuildingManager().getBuilding(CurrentPlaceObject);
-                
+            {
                 if (curBuilding->BuildingType == "Mine") {
                     if (Gold >= curBuilding->Cost && Terrain::GetGroundTypeAtMouse() == GroundType::Dirt1 && Building::NotWithinBuilding(GameData::Buildings, (sf::Vector2f)sf::Mouse::getPosition() / Camera::Zoom - Camera::Location)) {
                         GameData::Buildings.push_back(new Building(curBuilding, ((sf::Vector2f)sf::Mouse::getPosition() / Camera::Zoom - Camera::Location)));
                         Gold -= curBuilding->Cost;
                         CurrentPlaceObject = "";
                         curBuilding = nullptr;
+                    } else {
+                        std::cout << "[DEBUG] Should play audio here..." << std::endl;
+                        //play sound here
                     }
                 } else {
                     if (Gold >= curBuilding->Cost && Building::NotWithinBuilding(GameData::Buildings, (sf::Vector2f)sf::Mouse::getPosition() / Camera::Zoom - Camera::Location)) {
@@ -143,8 +152,16 @@ void GameInstance::HandleButtons(double DeltaTime)
         if(curBuilding != nullptr) {
             curBuilding->Loc = ((sf::Vector2f)sf::Mouse::getPosition() / Camera::Zoom - Camera::Location);
             //GameData::Buildings.push_back(curBuilding);
+            curBuilding->Components[0]->Visual.setColor(sf::Color(255, 255, 255, 100));
             GameInstance::RenderEntity(curBuilding);
         }
+
+        //if (CurrentUpgrade != nullptr) {   
+            //Will deal with this later :)
+            //if (!CurrentUpgrade->CallIfHovered()) {
+            //   CurrentUpgrade = nullptr;
+            //}
+        //}
     }
 }
 

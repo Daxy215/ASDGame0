@@ -42,23 +42,28 @@ public:
 	Building(Building* building, sf::Vector2f loc);
 	Building(std::string inName, sf::Vector2f Loc);
 	void EntityLogic(double DeltaTime, std::vector<Projectile*>* projectiles, std::vector<Soldier*> Targets);
-	ProjectileData ProjectileInst;
-	float Range;
+	void Upgrade();
+	float UpgradeCost();
+
 	std::string ComponentName;
 	std::string BuildingType;
+	int currentLevel = 0;
 	int Cost;
-	sf::Vector2f AimingDirection = sf::Vector2f(0,0);
+	float Range;
 	float UsingTerrain = 50;
-
+	ProjectileData ProjectileInst;
+	sf::Vector2f AimingDirection = sf::Vector2f(0,0);
+	std::vector<Building*> upgrades;
+	
 	static bool NotWithinBuilding(std::vector<Building*> buildings, sf::Vector2f point);
 
 	static int GetIndexOfHoveredTower(std::vector<Building*> buildings, sf::Vector2f point);
 
-
 	static void LoadAllBuildings();
 
 	static std::map<std::string, BuildingData> BuildingList;
-	
+private:
+	void setStatTo(Building* building);
 };
 
 

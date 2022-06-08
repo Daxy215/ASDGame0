@@ -42,6 +42,25 @@ void LoaderManager::loadBuildings() {
 			b->AudioComponents.emplace(audioValue, new SoundComponent(cfg_root[buildingName]["Audios"][audioValue]["SoundComponent"].asString()));
 		}
 
+		for (Json::Value::const_iterator itr = cfg_root[buildingName]["Upgrades"].begin(); itr != cfg_root[buildingName]["Upgrades"].end(); itr++) {
+			std::string upgradeName = itr.name();
+
+			std::string componentName = cfg_root[buildingName]["Upgrades"][upgradeName]["ComponentName"].asString();
+			std::string buildingType = cfg_root[buildingName]["Upgrades"][upgradeName]["BuildingType"].asString();
+			int damage = cfg_root[buildingName]["Upgrades"][upgradeName]["Damage"].asInt();
+			float speed = cfg_root[buildingName]["Upgrades"][upgradeName]["Speed"].asFloat();
+			float timeExists = cfg_root[buildingName]["Upgrades"][upgradeName]["TimeExists"].asFloat();
+			float timeGap = cfg_root[buildingName]["Upgrades"][upgradeName]["TimeGap"].asFloat();
+			float attackDelay = cfg_root[buildingName]["Upgrades"][upgradeName]["AttackDelay"].asFloat();
+			int health = cfg_root[buildingName]["Upgrades"][upgradeName]["Health"].asInt();
+			int size = cfg_root[buildingName]["Upgrades"][upgradeName]["Size"].asInt();
+			int range = cfg_root[buildingName]["Upgrades"][upgradeName]["Range"].asInt();
+			int cost = cfg_root[buildingName]["Upgrades"][upgradeName]["Cost"].asInt();
+
+			b->upgrades.push_back(new Building(buildingName, componentName, buildingType, damage, speed,
+				timeExists, timeGap, attackDelay, health, size, range, cost));
+		}
+
 		//Adding a new building to the list
 		buildings.push_back(b);
 	}

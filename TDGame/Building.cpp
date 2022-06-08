@@ -16,38 +16,23 @@ Building::Building(std::string buildingName, std::string componentName, std::str
 	BuildingType = buildingType;
 	AttackDelay = attackDelay;
 	Health = health;
+	this->size = size;
 	Range = range;
 	Cost = cost;
-
-	//AudioComponents.emplace(audioValue, new SoundComponent(audioComponent));
-	//std::cout << AudioComponents.size() << std::endl;
-	//for (int i = 0; i < AudioComponents.size(); i++) {
-	//	std::cout << AudioComponents[i] << std::endl;
-	//}
 }
 
 Building::Building(Building* building, sf::Vector2f loc) : Entity(building->Name) {
-	if (!building->ComponentName.empty())
-		Components.push_back(new Component(building->ComponentName));
+	setStatTo(building);
 
-	ProjectileInst.Damage = building->ProjectileInst.Damage;
-	ProjectileInst.Speed = building->ProjectileInst.Speed;
-	ProjectileInst.TimeExists = building->ProjectileInst.TimeExists;
-	ProjectileInst.TimeGap = building->ProjectileInst.TimeGap;
-	BuildingType = building->BuildingType;
-	AttackDelay = building->AttackDelay;
-	Health = building->Health;
-	Range = building->Range;
-	Cost = building->Cost;
+	if (this->upgrades.empty()) {
+		//std::cout << "[DEBUG] Copying upgrades list " << building->upgrades.size() << std::endl;
 
-	std::map<std::string, SoundComponent*>::iterator it;
-
-	for (it = building->AudioComponents.begin(); it != building->AudioComponents.end(); it++) {
-		AudioComponents.emplace(it->first, it->second);
+		this->upgrades = building->upgrades;
 	}
 
 	this->Loc = loc;
 }
+
 
 Building::Building(std::string inName, sf::Vector2f Loc) : Entity(inName)
 {
@@ -133,6 +118,64 @@ void Building::EntityLogic(double DeltaTime, std::vector<Projectile*>* projectil
 
 }
 
+void Building::Upgrade() {
+	if (currentLevel + 1 >= upgrades.size()) {
+		std::cout << "[DEBUG] Level Max! YAY :D" << std::endl;
+
+		return;
+	}
+
+	setStatTo(upgrades[++currentLevel]);
+}
+
+float Building::UpgradeCost() {
+	if (currentLevel + 1 >= upgrades.size()) {
+		std::cout << "[DEBUG] Level Max! YAY :D" << std::endl;
+
+		return 0;
+	}
+	
+	return upgrades[currentLevel + 1]->Cost;
+}
+
+void Building::setStatTo(Building* building) {
+	if (!building->ComponentName.empty())
+		Components.push_back(new Component(building->ComponentName));
+
+	if (building->ProjectileInst.Damage != 0)
+		ProjectileInst.Damage = building->ProjectileInst.Damage;
+
+	if (building->ProjectileInst.Speed != 0)
+		ProjectileInst.Speed = building->ProjectileInst.Speed;
+
+	if (building->ProjectileInst.TimeExists != 0)
+		ProjectileInst.TimeExists = building->ProjectileInst.TimeExists;
+
+	if (building->ProjectileInst.TimeGap != 0)
+		ProjectileInst.TimeGap = building->ProjectileInst.TimeGap;
+
+	if (building->AttackDelay != 0)
+		AttackDelay = building->AttackDelay;
+
+	if (building->Health != 0)
+		Health = building->Health;
+
+	if (building->Range != 0)
+		Range = building->Range;
+
+	if (building->size != 0)
+		this->size = building->size;
+
+	BuildingType = building->BuildingType;
+	Cost = building->Cost;
+
+	std::map<std::string, SoundComponent*>::iterator it;
+
+	for (it = building->AudioComponents.begin(); it != building->AudioComponents.end(); it++) {
+		AudioComponents.emplace(it->first, it->second);
+	}
+}
+
 bool Building::NotWithinBuilding(std::vector<Building*> buildings, sf::Vector2f point)
 {
 	for(Building* i: buildings)
@@ -149,6 +192,7 @@ bool Building::NotWithinBuilding(std::vector<Building*> buildings, sf::Vector2f 
 int Building::GetIndexOfHoveredTower(std::vector<Building*> buildings, sf::Vector2f point)
 {
 	int idx = 0;
+
 	for (Building* i: buildings)
 	{
 		if (i->DistanceTo(point)<i->size)
@@ -158,12 +202,8 @@ int Building::GetIndexOfHoveredTower(std::vector<Building*> buildings, sf::Vecto
 		idx++;
 	}
 
-
-
 	return -1;
 }
-
-
 
 std::map<std::string, BuildingData> Building::BuildingList;
 

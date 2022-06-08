@@ -1,6 +1,7 @@
 #include "ParticleFX.h"
 #include <iostream>
 #include <fstream>
+#include <json/json.h>
 
 
 
@@ -77,60 +78,39 @@ ParticleFX::ParticleFX(std::string name)
 {
 
 
-	std::ifstream dataFile("Data/Particles/" + name + ".csp");
-	std::string l;
-	std::getline(dataFile,l);
-	Lifetime = std::stof(l);
+	Json::Value cfg_root = "";
+	std::ifstream cfgfile("Data/Particles/"+name+".json");
 
-	std::getline(dataFile, l);
-	SpawnShapeTime = std::stof(l);
-
-	std::getline(dataFile, l);
-	SpawnShapeTimeVariance = std::stof(l);
-
-	std::getline(dataFile, l);
-	RandomVelocity = std::stoi(l);
-
-	std::getline(dataFile, l);
-	Velocity.x = std::stof(l);
-
-	std::getline(dataFile, l);
-	Velocity.y = std::stof(l);
+	cfgfile >> cfg_root;
 
 
-	std::getline(dataFile, Template.ShapeType);
 
-	std::getline(dataFile, l);
-	Template.LocVariance = std::stof(l);
+		Lifetime = cfg_root["lifetime"].asFloat();
+		SpawnShapeTime = cfg_root["spawntime"].asFloat();
+		SpawnShapeTimeVariance = cfg_root["spawnvariance"].asFloat();
+		RandomVelocity = cfg_root["randomvelocity"].asBool();
+		Velocity.x = cfg_root["xvelocity"].asFloat();
+		Velocity.y = cfg_root["yvelocity"].asFloat();
+		Template.ShapeType = cfg_root["texture"].asString();
+		Template.LocVariance = cfg_root["locationvariance"].asFloat();
+		Template.LifeTime = cfg_root["plifetime"].asFloat();
+		Template.LifeTimeVariance = cfg_root["plifetimevariance"].asFloat();
+		Template.Size = cfg_root["size"].asFloat();
+		Template.DeltaSize = cfg_root["deltasize"].asFloat();
+		Template.Colour.r = cfg_root["rcolour"].asFloat();
+		Template.Colour.g = cfg_root["gcolour"].asFloat();
+		Template.Colour.b = cfg_root["bcolour"].asFloat();
+		Template.RandomRotation = cfg_root["randomrotation"].asBool();
+		Template.DeltaVelocity = cfg_root["deltavelocity"].asFloat();
+	
 
-	std::getline(dataFile, l);
-	Template.LifeTime = std::stof(l);
 
-	std::getline(dataFile, l);
-	Template.Size = std::stof(l);
 
-	std::getline(dataFile, l);
-	Template.DeltaSize = std::stof(l);
-
-	std::getline(dataFile, l);
-	Template.Colour.r = std::stoi(l);
-
-	std::getline(dataFile, l);
-	Template.Colour.g = std::stoi(l);
-
-	std::getline(dataFile, l);
-	Template.Colour.b = std::stoi(l);
-
-	std::getline(dataFile, l);
-	Template.RandomRotation = std::stoi(l);
-
-	std::getline(dataFile, l);
-	Template.DeltaVelocity = std::stof(l);
 
 
 	SpawnShapeTimeRemain = 0;
 
 
 
-	dataFile.close();
+	cfgfile.close();
 }

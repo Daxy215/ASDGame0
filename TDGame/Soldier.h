@@ -12,6 +12,7 @@ class Soldier :
 public:
     void EntityLogic(double DeltaTime);
     Soldier(std::string inName, sf::Vector2f SpawnLocation, Entity* inTarget);
+    Soldier(std::string name, int health, int attack, int size, float attackDelay, int speed);
     Entity* Target;
 
     ~Soldier();

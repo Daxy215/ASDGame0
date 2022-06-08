@@ -1,0 +1,30 @@
+{
+    "Grunt" : {
+        "Health": 50,
+        "Attack": 5,
+        "Size": 5,
+        "AttackDelay": 1.5,
+        "Speed": 100
+    },
+    "Giant" : {
+        "Health": 175,
+        "Attack": 20,
+        "Size": 10,
+        "AttackDelay": 2.5,
+        "Speed": 85
+    },
+    "Raider" : {
+        "Health": 30,
+        "Attack": 6,
+        "Size": 6,
+        "AttackDelay": 1.2,
+        "Speed": 140
+    },
+    "Knight" : {
+        "Health": 125,
+        "Attack": 12,
+        "Size": 6,
+        "AttackDelay": 1.4,
+        "Speed": 95
+    }
+}

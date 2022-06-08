@@ -137,7 +137,10 @@ public:
 	HUD();
 	void Render(sf::RenderWindow* window, int money);
 	VButton StandardTowerButton = VButton(sf::Vector2i(0,815),sf::Vector2i(475,1080),"UITower.png");
-	VButton MineButton = VButton(sf::Vector2i(475, 815), sf::Vector2i(975, 1080), "UIMine.png");;
-	VButton MageButton = VButton(sf::Vector2i(975, 815), sf::Vector2i(1460, 1080), "UIMage.png");;
+	VButton MineButton = VButton(sf::Vector2i(475, 815), sf::Vector2i(975, 1080), "UIMine.png");
+	VButton MageButton = VButton(sf::Vector2i(975, 815), sf::Vector2i(1460, 1080), "UIMage.png");
+	VButton PauseButton = VButton(sf::Vector2i(0,0),sf::Vector2i(160,40),"UIPause.png");
+
+	int PauseMenu(sf::RenderWindow* window);
 
 };

@@ -11,6 +11,7 @@ struct ParticleTemplate
 	std::string ShapeType;
 	sf::Color Colour;
 	float LifeTime;
+	float LifeTimeVariance;
 	float DeltaSize;
 	bool RandomRotation;
 	float DeltaVelocity;

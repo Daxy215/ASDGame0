@@ -40,7 +40,7 @@ public:
 	Building(std::string buildingName, std::string componentName, std::string buildingType, int damage, float speed, float timeExists, float timeGap,
 		float attackDelay, int health, int size, int range, int cost);
 	Building(Building* building, sf::Vector2f loc);
-	Building(std::string inName, sf::Vector2f Loc);
+	//Building(std::string inName, sf::Vector2f Loc);
 	void EntityLogic(double DeltaTime, std::vector<Projectile*>* projectiles, std::vector<Soldier*> Targets);
 	void Upgrade();
 	float UpgradeCost();

@@ -34,7 +34,7 @@ Building::Building(Building* building, sf::Vector2f loc) : Entity(building->Name
 }
 
 
-Building::Building(std::string inName, sf::Vector2f Loc) : Entity(inName)
+/*Building::Building(std::string inName, sf::Vector2f Loc) : Entity(inName)
 {
 	size = 50;
 
@@ -79,7 +79,7 @@ Building::Building(std::string inName, sf::Vector2f Loc) : Entity(inName)
 	}
 
 	this->Loc = Loc;
-}
+}*/
 
 void Building::EntityLogic(double DeltaTime, std::vector<Projectile*>* projectiles, std::vector<Soldier*> Targets)
 {
@@ -91,7 +91,6 @@ void Building::EntityLogic(double DeltaTime, std::vector<Projectile*>* projectil
 			if(BuildingType == "Mage")
 			//if (Name == "Mage")
 			{
-				
 				projectiles->push_back(new Projectile(ProjectileInst.Speed, ProjectileInst.Damage, ProjectileInst.TimeExists, AimingDirection, "Magic"));
 				projectiles->back()->Loc = Loc;
 
@@ -108,7 +107,15 @@ void Building::EntityLogic(double DeltaTime, std::vector<Projectile*>* projectil
 				projectiles->back()->Loc = Loc;
 				
 			}
-			AudioComponents.at("Fire")->Audio.play();
+
+
+			std::map<std::string, SoundComponent*>::iterator it;
+
+			for (it = AudioComponents.begin(); it != AudioComponents.end(); it++) {
+				it->second->Audio.play();
+			}
+			
+			//AudioComponents.at("Fire")->Audio.play();
 		}
 	}
 	else

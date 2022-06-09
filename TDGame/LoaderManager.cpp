@@ -70,13 +70,12 @@ void LoaderManager::loadSoliders() {
 	//Loading the data file.
 	Json::Value cfg_root = "";
 	std::ifstream cfgfile("Data/SoldiersData.json");
-
 	//Reading it as json.
 	cfgfile >> cfg_root;
 
 	for (Json::Value::const_iterator itr = cfg_root.begin(); itr != cfg_root.end(); itr++) {
 		std::string soldierName = itr.name();
-
+		
 		int health = cfg_root[soldierName]["Health"].asInt();
 		int attack = cfg_root[soldierName]["Attack"].asInt();
 		int size = cfg_root[soldierName]["Size"].asInt();

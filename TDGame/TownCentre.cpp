@@ -1,11 +1,11 @@
 #include "TownCentre.h"
 #include<iostream>
 
-TownCentre::TownCentre() : Building("TownCentre",sf::Vector2f(0,0))
+TownCentre::TownCentre() : Building("TownCentre", "TownCentre", "Tower", 18, 750, 4, 0.65,
+	1, 1000, 100, 800, 0)
 {
-	size = 150;
-	Health = 100000;
-	Components.push_back(new Component("TownCentre"));
+
+	
 }
 
 

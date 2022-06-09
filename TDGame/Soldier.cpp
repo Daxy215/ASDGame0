@@ -11,10 +11,10 @@ void Soldier::EntityLogic(double Deltatime)
 	//unit vector calculations can be put somewhere else
 	//is in the entity class now
 
-	if (DistanceTo(Target)<Target->size+size)
+	if (DistanceTo(Target) < Target->size + size)
 	{
 		//attack
-		if (CountdownToNextAttack<0)
+		if (CountdownToNextAttack < 0)
 		{
 			AttackEntity(Target);
 			CountdownToNextAttack = AttackDelay;
@@ -29,8 +29,8 @@ void Soldier::EntityLogic(double Deltatime)
 		//move
 
 
-		
-		Loc=(Loc + FindLookAtVector(Target) *(float)Deltatime*Speed);
+
+		Loc = (Loc + FindLookAtVector(Target) * (float)Deltatime * Speed);
 	}
 
 
@@ -41,13 +41,13 @@ void Soldier::EntityLogic(double Deltatime)
 Soldier::Soldier(std::string inName, sf::Vector2f SpawnLocation, Entity* inTarget) : Entity(inName)
 {
 	Target = inTarget;
-	
-	
+
+
 	Loc = SpawnLocation;
 
 	Soldier* soldier = getLoaderManager().getSoldier(inName);
 
-	if(soldier == nullptr) {
+	if (soldier == nullptr) {
 		std::cout << "[ERROR] Couldn't find a soldier with the name of: " << inName << " - Check the json file" << std::endl;
 
 		return;
@@ -107,6 +107,6 @@ Soldier::Soldier(std::string name, int health, int attack, int size, float attac
 
 Soldier::~Soldier()
 {
-	Entity::StaticEntities.push_back(new DecayEntity(Name+"Corpse",2,Loc));
+	Entity::StaticEntities.push_back(new DecayEntity(Name + "Corpse", 2, Loc));
 
 }

@@ -6,12 +6,14 @@
 
 int main() {
 	int choice = 0;
-	MainMenu* Menu = new MainMenu();
-	choice = Menu->MenuLoop();
+	//MainMenu* Menu = new MainMenu();
+	//choice = Menu->MenuLoop();
 
-	//ConfigData conf = getConfiguration();
 
-	//choice = conf.Choice;//temp
+	ConfigData conf = getConfiguration();
+
+
+	choice = conf.Choice;//temp
 
 	if (choice == 0) {
 		Anim::LoadAllAnims();
@@ -19,7 +21,7 @@ int main() {
 		Building::LoadAllBuildings();
 		getLoaderManager().loadBuildings();
 		getLoaderManager().loadSoliders();
-
+		
 		GameInstance* Game = new GameInstance();
 		Game->GameLoop();
 	}
@@ -28,23 +30,23 @@ int main() {
 		Anim::LoadAllAnims();
 		SoundData::LoadAllSounds();
 		Building::LoadAllBuildings();
+		getLoaderManager().loadBuildings();
+		getLoaderManager().loadSoliders();
 
 		GameInstance* Game = new GameInstance();
 		Game->LoadGame();
 		Game->GameLoop();
 	}
 
-#ifdef NDEBUG
 
-	
-#else
+
 	//particle editor
-	if (choice == 2)
+	if (choice == 2 || choice == 3)
 	{
 		Anim::LoadAllAnims();
 		SoundData::LoadAllSounds();
 		Editor* editor = new Editor();
 		editor->RunEditor(choice);
 	}
-#endif
+
 }

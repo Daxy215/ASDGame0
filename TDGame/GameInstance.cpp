@@ -1,7 +1,7 @@
 #include <chrono>
 #include "GameInstance.h"
 #include <stdlib.h>
-#include "BuildingManager.h"
+#include "LoaderManager.h"
 
 void GameInstance::GoldCalulation(double DeltaTime)
 {
@@ -50,17 +50,17 @@ void GameInstance::HandleButtons(double DeltaTime)
         if (UI->StandardTowerButton.CallIfHovered())
         {
             SetObjectToTower();
-            curBuilding = getBuildingManager().getBuilding(CurrentPlaceObject);
+            curBuilding = getLoaderManager().getBuilding(CurrentPlaceObject);
         }
         else if (UI->MineButton.CallIfHovered())
         {
             SetObjectToMine();
-            curBuilding = getBuildingManager().getBuilding(CurrentPlaceObject);
+            curBuilding = getLoaderManager().getBuilding(CurrentPlaceObject);
         }
         else if (UI->MageButton.CallIfHovered())
         {
             SetObjectToMage();
-            curBuilding = getBuildingManager().getBuilding(CurrentPlaceObject);
+            curBuilding = getLoaderManager().getBuilding(CurrentPlaceObject);
         }
         else if (UI->PauseButton.CallIfHovered())
         {
@@ -417,7 +417,7 @@ void GameInstance::LoadGame()
         sf::Vector2f Loc;
         save.read((char*)&Loc.x, 4);
         save.read((char*)&Loc.y, 4);
-        GameData::Buildings.push_back(new Building(tStr, Loc)); //check to make sure strings are working correctly
+        GameData::Buildings.push_back(new Building(getLoaderManager().getBuilding(tStr), Loc)); //check to make sure strings are working correctly
         save.read((char*)&GameData::Buildings.back()->Health, 4);
     }
 
@@ -427,7 +427,7 @@ void GameInstance::LoadGame()
         sf::Vector2f Loc;
         save.read((char*)&Loc.x, 4);
         save.read((char*)&Loc.y, 4);
-        GameData::Mines.push_back(new Building("Mine", Loc));
+        GameData::Mines.push_back(new Building(getLoaderManager().getBuilding("Mine"), Loc));
         save.read((char*)&GameData::Mines.back()->Health, 4);
     }
 
@@ -729,7 +729,7 @@ GameInstance::GameInstance()
     config = getConfiguration();
     TerrainData = new Terrain();
 
-    window = new sf::RenderWindow(sf::VideoMode(config.ScreenX, config.ScreenY), "TD Game", sf::Style::Fullscreen);
+    window = new sf::RenderWindow(sf::VideoMode(config.ScreenX, config.ScreenY), "TD Game");
 
 
 

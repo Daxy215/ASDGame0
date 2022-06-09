@@ -52,9 +52,9 @@ public:
 	float Range;
 	float UsingTerrain = 50;
 	ProjectileData ProjectileInst;
-	sf::Vector2f AimingDirection = sf::Vector2f(0,0);
+	sf::Vector2f AimingDirection = sf::Vector2f(0, 0);
 	std::vector<Building*> upgrades;
-	
+
 	static bool NotWithinBuilding(std::vector<Building*> buildings, sf::Vector2f point);
 
 	static int GetIndexOfHoveredTower(std::vector<Building*> buildings, sf::Vector2f point);
@@ -65,6 +65,5 @@ public:
 private:
 	void setStatTo(Building* building);
 };
-
 
 

@@ -83,29 +83,29 @@ Building::Building(Building* building, sf::Vector2f loc) : Entity(building->Name
 
 void Building::EntityLogic(double DeltaTime, std::vector<Projectile*>* projectiles, std::vector<Soldier*> Targets)
 {
-	if (CountdownToNextAttack<=0)
+	if (CountdownToNextAttack <= 0)
 	{
 		CountdownToNextAttack = AttackDelay;
-		if (AimingDirection!=sf::Vector2f(0,0))
+		if (AimingDirection != sf::Vector2f(0, 0))
 		{
-			if(BuildingType == "Mage")
-			//if (Name == "Mage")
+			if (BuildingType == "Mage")
+				//if (Name == "Mage")
 			{
 				projectiles->push_back(new Projectile(ProjectileInst.Speed, ProjectileInst.Damage, ProjectileInst.TimeExists, AimingDirection, "Magic"));
 				projectiles->back()->Loc = Loc;
 
 				projectiles->push_back(new Projectile(ProjectileInst.Speed, ProjectileInst.Damage, ProjectileInst.TimeExists, AimingDirection, "Magic"));
-				projectiles->back()->Loc = Loc + sf::Vector2f(std::rand() % 20 - 10, std::rand()%20-10);
+				projectiles->back()->Loc = Loc + sf::Vector2f(std::rand() % 20 - 10, std::rand() % 20 - 10);
 
-				projectiles->push_back(new Projectile(ProjectileInst.Speed, ProjectileInst.Damage, ProjectileInst.TimeExists, AimingDirection,"Magic"));
-				projectiles->back()->Loc = Loc+sf::Vector2f(std::rand() % 20 - 10, std::rand() % 20 - 10);
+				projectiles->push_back(new Projectile(ProjectileInst.Speed, ProjectileInst.Damage, ProjectileInst.TimeExists, AimingDirection, "Magic"));
+				projectiles->back()->Loc = Loc + sf::Vector2f(std::rand() % 20 - 10, std::rand() % 20 - 10);
 			}
-			if(BuildingType == "Tower")
-			//if (Name == "TownCentre" || Name=="StandardTower")
+			if (BuildingType == "Tower")
+				//if (Name == "TownCentre" || Name=="StandardTower")
 			{
-				projectiles->push_back(new Projectile(ProjectileInst.Speed, ProjectileInst.Damage, ProjectileInst.TimeExists, AimingDirection,"Arrow"));
+				projectiles->push_back(new Projectile(ProjectileInst.Speed, ProjectileInst.Damage, ProjectileInst.TimeExists, AimingDirection, "Arrow"));
 				projectiles->back()->Loc = Loc;
-				
+
 			}
 
 
@@ -114,7 +114,7 @@ void Building::EntityLogic(double DeltaTime, std::vector<Projectile*>* projectil
 			for (it = AudioComponents.begin(); it != AudioComponents.end(); it++) {
 				it->second->Audio.play();
 			}
-			
+
 			//AudioComponents.at("Fire")->Audio.play();
 		}
 	}
@@ -141,7 +141,7 @@ float Building::UpgradeCost() {
 
 		return 0;
 	}
-	
+
 	return upgrades[currentLevel + 1]->Cost;
 }
 
@@ -185,9 +185,9 @@ void Building::setStatTo(Building* building) {
 
 bool Building::NotWithinBuilding(std::vector<Building*> buildings, sf::Vector2f point)
 {
-	for(Building* i: buildings)
+	for (Building* i : buildings)
 	{
-		if (i->DistanceTo(point)<i->size+i->UsingTerrain)
+		if (i->DistanceTo(point) < i->size + i->UsingTerrain)
 		{
 			return false;
 		}
@@ -200,9 +200,9 @@ int Building::GetIndexOfHoveredTower(std::vector<Building*> buildings, sf::Vecto
 {
 	int idx = 0;
 
-	for (Building* i: buildings)
+	for (Building* i : buildings)
 	{
-		if (i->DistanceTo(point)<i->size)
+		if (i->DistanceTo(point) < i->size)
 		{
 			return idx;
 		}
@@ -222,7 +222,7 @@ void Building::LoadAllBuildings()
 	for (const auto& entry : fs::directory_iterator("Data/Buildings"))
 	{
 		BuildingData tmp = BuildingData(entry.path().filename().string());
-		BuildingList.emplace(entry.path().filename().stem().string(),tmp);
+		BuildingList.emplace(entry.path().filename().stem().string(), tmp);
 	}
 
 }
@@ -234,7 +234,7 @@ std::string ReadString(std::ifstream* inp)
 	inp->read((char*)&len, 1);
 	std::string out;
 	char tmp[255];
-	inp->read(tmp,len);
+	inp->read(tmp, len);
 	tmp[len] = '\0';
 	out = tmp;
 	return out;
@@ -243,10 +243,10 @@ std::string ReadString(std::ifstream* inp)
 
 BuildingData::BuildingData(std::string file)
 {
-	std::ifstream ifs("Data/Buildings/"+file, std::fstream::binary);
-	
+	std::ifstream ifs("Data/Buildings/" + file, std::fstream::binary);
+
 	int version; //probably add an if here
-	ifs.read((char*)&version,4);
+	ifs.read((char*)&version, 4);
 	ReadString(&ifs);
 	ifs.read((char*)&Health, 4);
 	ifs.read((char*)&PDamage, 4);

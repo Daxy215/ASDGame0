@@ -6,7 +6,7 @@
 class Soldier :
     public Entity
 {
-    
+
     float Speed = 100;
 public:
     void EntityLogic(double DeltaTime);
@@ -17,6 +17,7 @@ public:
     int effectDuration;
     Entity* Target;
 
-    ~Soldier();  
-};
 
+    ~Soldier();  
+
+};

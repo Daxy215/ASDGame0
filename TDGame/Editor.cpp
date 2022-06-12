@@ -7,6 +7,7 @@ void Editor::RunEditor(int type)
 	{
 		ParticleEditor();
 	}
+
 }
 
 void Editor::ParticleEditor()
@@ -59,6 +60,4 @@ void Editor::ParticleEditor()
 
     }
 }
-
-
 

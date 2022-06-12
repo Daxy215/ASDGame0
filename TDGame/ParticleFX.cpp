@@ -105,7 +105,7 @@ ParticleFX::ParticleFX(std::string name)
 	
 
 
-
+		Template.LifeTime += Utils::RandomFloatInRange(Template.LifeTimeVariance);
 
 
 	SpawnShapeTimeRemain = 0;

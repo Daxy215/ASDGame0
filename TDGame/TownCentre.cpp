@@ -2,8 +2,13 @@
 #include "TownCentre.h"
 #include "LoaderManager.h"
 
-TownCentre::TownCentre() : Building(getLoaderManager().getBuilding("TowerCentre"), sf::Vector2f(0, 0)) {
-	size = 150;
-	Health = 100000;
-	Components.push_back(new Component("TownCentre"));
+
+
+
+TownCentre::TownCentre() : Building("TownCentre", "TownCentre", "Tower", 18, 750, 4, 0.65,
+	1, 1000, 100, 800, 0)
+{
+
+	
+
 }

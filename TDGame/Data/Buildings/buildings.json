@@ -2,7 +2,9 @@
     "StandardTower" : {
         "ComponentName": "StandardTower",
         "BuildingType": "Tower",
+
         "EffectType": "Fire",
+
         "Damage": 15,
         "Speed": 700,
         "TimeExists": 4,
@@ -14,6 +16,7 @@
         "Cost": 100,
         
         "Audios" : {
+
             "Fire" : {
             "SoundComponent": "ArrowFire"
           }
@@ -35,6 +38,7 @@
             "Cost": 150
           }
         }
+
     },
     "TownCentre" : {
         "ComponentName": "",
@@ -50,10 +54,12 @@
         "Cost": 100,
         
         "Audios" : {
-          "Fire" : {
-            "SoundComponent": "ArrowFire"
-          }
-        }
+
+			"Fire" : {
+				"SoundComponent": "ArrowFire"
+			}
+		}
+
     },
     "Mine" : {
         "ComponentName": "Mine",
@@ -69,10 +75,12 @@
         "Cost": 150,
 
         "Audios" : {
-          "Fire" : {
-            "SoundComponent": "ArrowFire"
-          }
-        }
+
+			"Fire" : {
+				"SoundComponent": "ArrowFire"
+			}
+		}
+
     },
     "Mage" : {
         "ComponentName": "MageTower",
@@ -88,9 +96,11 @@
         "Cost": 150,
         
         "Audios" : {
-          "Fire" : {
-            "SoundComponent": "MagicFire"
-          }
-        }
+
+			"Fire" : {
+				"SoundComponent": "MagicFire"
+			}
+		}
+
     }
 }

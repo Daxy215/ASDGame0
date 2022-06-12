@@ -9,7 +9,7 @@ void LoaderManager::loadBuildings() {
 
 	//Reading it as json.
 	cfgfile >> cfg_root;
-	
+
 	//const int buildingsSize = cfg_root.size();
 
 	//std::cout << "[DEBUG] JSON: " << cfg_root << std::endl;
@@ -18,7 +18,7 @@ void LoaderManager::loadBuildings() {
 	//Iterate throughout the buildings.
 	for (Json::Value::const_iterator itr = cfg_root.begin(); itr != cfg_root.end(); itr++) {
 		std::string buildingName = itr.name();
-		
+
 		//Setting values
 		std::string componentName = cfg_root[buildingName]["ComponentName"].asString();
 		std::string buildingType = cfg_root[buildingName]["BuildingType"].asString();
@@ -77,7 +77,7 @@ void LoaderManager::loadSoliders() {
 
 	for (Json::Value::const_iterator itr = cfg_root.begin(); itr != cfg_root.end(); itr++) {
 		std::string soldierName = itr.name();
-		
+
 		int health = cfg_root[soldierName]["Health"].asInt();
 		int attack = cfg_root[soldierName]["Attack"].asInt();
 		int size = cfg_root[soldierName]["Size"].asInt();
@@ -104,6 +104,14 @@ Soldier* LoaderManager::getSoldier(std::string name) {
 			return soldiers[i];
 		}
 	}
+
+	return nullptr;
+}
+
+Effect* LoaderManager::getEffects(std::string type) {
+	for (int i = 0; i < effects.size(); i++)
+		if (effects[i]->type == type)
+			return effects[i];
 
 	return nullptr;
 }

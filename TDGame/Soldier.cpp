@@ -1,5 +1,6 @@
-#include <iostream>
 #include "Soldier.h"
+#include "LoaderManager.h"
+
 
 void Soldier::EntityLogic(double Deltatime)
 {
@@ -7,10 +8,15 @@ void Soldier::EntityLogic(double Deltatime)
 
 	//If the soldier has an effect
 	if (currentEffect != nullptr) {
-		if (currentEffect->duration < effectDuration) {
+		if (currentEffect->duration > effectDuration) {
 			effectDuration += Deltatime;
 
 			currentEffect->apply(this);
+		}
+		else {
+			currentEffect->onFinish(this);
+			currentEffect = nullptr;
+			effectDuration = 0;
 		}
 	}
 
@@ -36,9 +42,6 @@ void Soldier::EntityLogic(double Deltatime)
 	{
 
 		//move
-
-
-
 		Loc = (Loc + FindLookAtVector(Target) * (float)Deltatime * Speed);
 
 	}
@@ -84,3 +87,4 @@ Soldier::~Soldier()
 	Entity::StaticEntities.push_back(new DecayEntity(Name + "Corpse", 2, Loc));
 
 }
+

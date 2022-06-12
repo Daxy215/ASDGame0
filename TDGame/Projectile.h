@@ -7,8 +7,9 @@ class Projectile : public Entity
 	
 
 public:
-	Projectile(float SpeedT, int DamageT, float TimeT, sf::Vector2f DirectionT, std::string type);
+	Projectile(float SpeedT, int DamageT, float TimeT, sf::Vector2f DirectionT, std::string effectType, std::string type);
 	void Run(double DeltaTime);
+	std::string effectType;
 	int Damage;
 	void EntityLogic(double DeltaTime);
 	float RemainingTime;

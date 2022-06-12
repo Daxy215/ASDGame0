@@ -7,6 +7,7 @@
 struct ProjectileData
 {
 	sf::Texture Texture;
+	std::string effectType;
 	int Damage;
 	float Speed;
 	float TimeGap;
@@ -37,16 +38,17 @@ struct BuildingData
 class Building : public Entity
 {
 public:
-	Building(std::string buildingName, std::string componentName, std::string buildingType, int damage, float speed, float timeExists, float timeGap,
+	Building(std::string buildingName, std::string componentName, std::string buildingType, std::string effectType, int damage, float speed, float timeExists, float timeGap,
 		float attackDelay, int health, int size, int range, int cost);
 	Building(Building* building, sf::Vector2f loc);
-	//Building(std::string inName, sf::Vector2f Loc);
+	Building(std::string inName, sf::Vector2f Loc);
 	void EntityLogic(double DeltaTime, std::vector<Projectile*>* projectiles, std::vector<Soldier*> Targets);
 	void Upgrade();
 	float UpgradeCost();
 
 	std::string ComponentName;
 	std::string BuildingType;
+	std::string EffectType;
 	int currentLevel = 0;
 	int Cost;
 	float Range;

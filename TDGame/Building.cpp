@@ -3,17 +3,19 @@
 #include <filesystem>
 #include <fstream>
 
-Building::Building(std::string buildingName, std::string componentName, std::string buildingType, int damage, float speed, float timeExists, float timeGap,
+Building::Building(std::string buildingName, std::string componentName, std::string buildingType, std::string effectType, int damage, float speed, float timeExists, float timeGap,
 	float attackDelay, int health, int size, int range, int cost) : Entity(buildingName) {
 	if (!componentName.empty())
 		Components.push_back(new Component(componentName));
 
 	ComponentName = componentName;
+	ProjectileInst.effectType = effectType;
 	ProjectileInst.Damage = damage;
 	ProjectileInst.Speed = speed;
 	ProjectileInst.TimeExists = timeExists;
 	ProjectileInst.TimeGap = timeGap;
 	BuildingType = buildingType;
+	EffectType = effectType;
 	AttackDelay = attackDelay;
 	Health = health;
 	this->size = size;
@@ -91,19 +93,24 @@ void Building::EntityLogic(double DeltaTime, std::vector<Projectile*>* projectil
 			if (BuildingType == "Mage")
 				//if (Name == "Mage")
 			{
-				projectiles->push_back(new Projectile(ProjectileInst.Speed, ProjectileInst.Damage, ProjectileInst.TimeExists, AimingDirection, "Magic"));
+				
+				projectiles->push_back(new Projectile(ProjectileInst.Speed, ProjectileInst.Damage, ProjectileInst.TimeExists, AimingDirection, EffectType, "Magic"));
 				projectiles->back()->Loc = Loc;
 
-				projectiles->push_back(new Projectile(ProjectileInst.Speed, ProjectileInst.Damage, ProjectileInst.TimeExists, AimingDirection, "Magic"));
-				projectiles->back()->Loc = Loc + sf::Vector2f(std::rand() % 20 - 10, std::rand() % 20 - 10);
 
-				projectiles->push_back(new Projectile(ProjectileInst.Speed, ProjectileInst.Damage, ProjectileInst.TimeExists, AimingDirection, "Magic"));
-				projectiles->back()->Loc = Loc + sf::Vector2f(std::rand() % 20 - 10, std::rand() % 20 - 10);
+				projectiles->push_back(new Projectile(ProjectileInst.Speed, ProjectileInst.Damage, ProjectileInst.TimeExists, AimingDirection, EffectType, "Magic"));
+				projectiles->back()->Loc = Loc + sf::Vector2f(std::rand() % 20 - 10, std::rand()%20-10);
+
+				projectiles->push_back(new Projectile(ProjectileInst.Speed, ProjectileInst.Damage, ProjectileInst.TimeExists, AimingDirection, EffectType, "Magic"));
+				projectiles->back()->Loc = Loc+sf::Vector2f(std::rand() % 20 - 10, std::rand() % 20 - 10);
+
 			}
 			if (BuildingType == "Tower")
 				//if (Name == "TownCentre" || Name=="StandardTower")
 			{
-				projectiles->push_back(new Projectile(ProjectileInst.Speed, ProjectileInst.Damage, ProjectileInst.TimeExists, AimingDirection, "Arrow"));
+
+				projectiles->push_back(new Projectile(ProjectileInst.Speed, ProjectileInst.Damage, ProjectileInst.TimeExists, AimingDirection, EffectType, "Arrow"));
+
 				projectiles->back()->Loc = Loc;
 
 			}
@@ -116,6 +123,7 @@ void Building::EntityLogic(double DeltaTime, std::vector<Projectile*>* projectil
 			}
 
 			//AudioComponents.at("Fire")->Audio.play();
+
 		}
 	}
 	else
@@ -173,7 +181,9 @@ void Building::setStatTo(Building* building) {
 	if (building->size != 0)
 		this->size = building->size;
 
+	ProjectileInst.effectType = building->ProjectileInst.effectType;
 	BuildingType = building->BuildingType;
+	EffectType = building->EffectType;
 	Cost = building->Cost;
 
 	std::map<std::string, SoundComponent*>::iterator it;

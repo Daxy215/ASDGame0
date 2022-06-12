@@ -477,7 +477,7 @@ void GameInstance::LoadGame()
         save.read((char*)&Dir.x, 4);
         save.read((char*)&Dir.y, 4);
 
-        GameData::Projectiles.push_back(new Projectile(speed, attack, rTime, Dir, tStr));
+        GameData::Projectiles.push_back(new Projectile(speed, attack, rTime, Dir, tStr,""));
         GameData::Projectiles.back()->Loc = Loc;
     }
 

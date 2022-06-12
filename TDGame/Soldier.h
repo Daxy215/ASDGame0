@@ -3,6 +3,42 @@
 #include "DecayEntity.h"
 
 
+
+static struct Effect {
+	std::string type;
+	int duration;
+
+	Effect(std::string type, int duration) {
+		this->type = type;
+		this->duration = duration;
+	}
+	
+	void apply(Entity* soldier) {
+
+	}
+	
+};
+
+static struct Fire : public Effect {
+	Fire() : Effect("Fire", 2) {
+
+	}
+
+
+	
+
+	void apply(Entity* soldier) {
+		//soldier->Health -= 2;
+		//std::cout << "Damaging.." << std::endl;
+		soldier->Health -= 2;
+		std::cout << "Damaging.." << std::endl;
+	}
+	
+};
+
+
+
+
 static struct Effect {
 	std::string type;
 	float duration;
@@ -46,9 +82,10 @@ public:
     Soldier(std::string name, int health, int attack, int size, float attackDelay, int speed);
     Effect* currentEffect;
     void setCurrentEffect(Effect* effect);
+
     float effectDuration, effectDelay;
     Entity* Target;
 
-
     ~Soldier();
+
 };

@@ -2,6 +2,7 @@
 #include "Building.h"
 #include "Soldier.h"
 
+
 class LoaderManager {
 public:
 	/*

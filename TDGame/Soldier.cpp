@@ -11,12 +11,16 @@ void Soldier::EntityLogic(double Deltatime)
 		if (currentEffect->duration > effectDuration) {
 			effectDuration += Deltatime;
 
-			currentEffect->apply(this);
-		}
-		else {
+			if (currentEffect->delay < effectDelay) {
+				currentEffect->apply(this);
+			} else {
+				effectDelay += Deltatime;
+			}
+		} else {
 			currentEffect->onFinish(this);
 			currentEffect = nullptr;
 			effectDuration = 0;
+			effectDelay = 0;
 		}
 	}
 
@@ -80,6 +84,7 @@ Soldier::Soldier(std::string name, int health, int attack, int size, float attac
 void Soldier::setCurrentEffect(Effect* effect) {
 	this->currentEffect = effect;
 	this->effectDuration = 0;
+	this->effectDelay = 0;
 }
 
 Soldier::~Soldier()

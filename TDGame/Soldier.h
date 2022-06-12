@@ -5,11 +5,13 @@
 
 static struct Effect {
 	std::string type;
-	int duration;
+	float duration;
+	float delay;
 
-	Effect(std::string type, int duration) {
+	Effect(std::string type, float duration, float delay) {
 		this->type = type;
 		this->duration = duration;
+		this->delay = delay;
 	}
 	
 	virtual void apply(Entity* soldier) {
@@ -22,7 +24,8 @@ static struct Effect {
 };
 
 static struct Fire : public Effect {
-	Fire() : Effect("Fire", 2) {
+	//Damage 2 every 0.2 seconds.
+	Fire() : Effect("Fire", 0.5f, 0.25f) {
 
 	}
 
@@ -43,7 +46,7 @@ public:
     Soldier(std::string name, int health, int attack, int size, float attackDelay, int speed);
     Effect* currentEffect;
     void setCurrentEffect(Effect* effect);
-    int effectDuration;
+    float effectDuration, effectDelay;
     Entity* Target;
 
 

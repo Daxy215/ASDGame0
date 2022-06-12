@@ -22,7 +22,6 @@ void LoaderManager::loadBuildings() {
 		//Setting values
 		std::string componentName = cfg_root[buildingName]["ComponentName"].asString();
 		std::string buildingType = cfg_root[buildingName]["BuildingType"].asString();
-		std::string effectType = cfg_root[buildingName]["EffectType"].asString();
 		int damage = cfg_root[buildingName]["Damage"].asInt();
 		float speed = cfg_root[buildingName]["Speed"].asFloat();
 		float timeExists = cfg_root[buildingName]["TimeExists"].asFloat();
@@ -33,7 +32,7 @@ void LoaderManager::loadBuildings() {
 		int range = cfg_root[buildingName]["Range"].asInt();
 		int cost = cfg_root[buildingName]["Cost"].asInt();
 
-		Building* b = new Building(buildingName, componentName, buildingType, effectType, damage, speed,
+		Building* b = new Building(buildingName, componentName, buildingType, damage, speed,
 			timeExists, timeGap, attackDelay, health, size, range, cost);
 
 		//Loading audios Compnent values
@@ -48,7 +47,6 @@ void LoaderManager::loadBuildings() {
 
 			std::string componentName = cfg_root[buildingName]["Upgrades"][upgradeName]["ComponentName"].asString();
 			std::string buildingType = cfg_root[buildingName]["Upgrades"][upgradeName]["BuildingType"].asString();
-			std::string effectType = cfg_root[buildingName]["Upgrades"][upgradeName]["EffectType"].asString();
 			int damage = cfg_root[buildingName]["Upgrades"][upgradeName]["Damage"].asInt();
 			float speed = cfg_root[buildingName]["Upgrades"][upgradeName]["Speed"].asFloat();
 			float timeExists = cfg_root[buildingName]["Upgrades"][upgradeName]["TimeExists"].asFloat();
@@ -59,7 +57,7 @@ void LoaderManager::loadBuildings() {
 			int range = cfg_root[buildingName]["Upgrades"][upgradeName]["Range"].asInt();
 			int cost = cfg_root[buildingName]["Upgrades"][upgradeName]["Cost"].asInt();
 
-			b->upgrades.push_back(new Building(buildingName, componentName, buildingType, effectType, damage, speed,
+			b->upgrades.push_back(new Building(buildingName, componentName, buildingType, damage, speed,
 				timeExists, timeGap, attackDelay, health, size, range, cost));
 		}
 

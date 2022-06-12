@@ -35,54 +35,6 @@ Building::Building(Building* building, sf::Vector2f loc) : Entity(building->Name
 	this->Loc = loc;
 }
 
-
-/*Building::Building(std::string inName, sf::Vector2f Loc) : Entity(inName)
-{
-	size = 50;
-
-	if (inName=="StandardTower")
-	{
-		Components.push_back(new Component("StandardTower"));
-		ProjectileInst.Damage = 15;
-		ProjectileInst.Speed = 700;
-		ProjectileInst.TimeExists = 4;
-		ProjectileInst.TimeGap = 0.65;
-		AttackDelay = 1;
-		Health = 125;
-		AudioComponents.emplace("Fire", new SoundComponent("ArrowFire"));
-		Range = 1200;
-	}
-	if (inName == "TownCentre")
-	{
-		ProjectileInst.Damage = 15;
-		ProjectileInst.Speed = 700;
-		ProjectileInst.TimeExists = 4;
-		ProjectileInst.TimeGap = 0.65;
-		AttackDelay = 1;
-		AudioComponents.emplace("Fire", new SoundComponent("ArrowFire"));
-		Range = 800;
-	}
-	if (inName=="Mine")
-	{
-		Components.push_back(new Component("Mine"));
-		Health = 100;
-	}
-	if (inName=="Mage")
-	{
-		Components.push_back(new Component("MageTower"));
-		ProjectileInst.Damage = 8;
-		ProjectileInst.Speed = 550;
-		ProjectileInst.TimeExists = 0.6;
-		ProjectileInst.TimeGap = 0.55;
-		AttackDelay = 0.4;
-		Health = 75;
-		AudioComponents.emplace("Fire", new SoundComponent("MagicFire"));
-		Range = 350;
-	}
-
-	this->Loc = Loc;
-}*/
-
 void Building::EntityLogic(double DeltaTime, std::vector<Projectile*>* projectiles, std::vector<Soldier*> Targets)
 {
 	if (CountdownToNextAttack <= 0)
@@ -91,7 +43,6 @@ void Building::EntityLogic(double DeltaTime, std::vector<Projectile*>* projectil
 		if (AimingDirection != sf::Vector2f(0, 0))
 		{
 			if (BuildingType == "Mage")
-				//if (Name == "Mage")
 			{
 				
 				projectiles->push_back(new Projectile(ProjectileInst.Speed, ProjectileInst.Damage, ProjectileInst.TimeExists, AimingDirection, EffectType, "Magic"));
@@ -106,7 +57,6 @@ void Building::EntityLogic(double DeltaTime, std::vector<Projectile*>* projectil
 
 			}
 			if (BuildingType == "Tower")
-				//if (Name == "TownCentre" || Name=="StandardTower")
 			{
 
 				projectiles->push_back(new Projectile(ProjectileInst.Speed, ProjectileInst.Damage, ProjectileInst.TimeExists, AimingDirection, EffectType, "Arrow"));
@@ -157,6 +107,15 @@ void Building::setStatTo(Building* building) {
 	if (!building->ComponentName.empty())
 		Components.push_back(new Component(building->ComponentName));
 
+	if(building->BuildingType.length() != 0)
+		BuildingType = building->BuildingType;
+
+	if(building->EffectType.length() != 0)
+		EffectType = building->EffectType;
+
+	if(building->ProjectileInst.effectType.length() != 0)
+		ProjectileInst.effectType = building->ProjectileInst.effectType;
+
 	if (building->ProjectileInst.Damage != 0)
 		ProjectileInst.Damage = building->ProjectileInst.Damage;
 
@@ -180,10 +139,7 @@ void Building::setStatTo(Building* building) {
 
 	if (building->size != 0)
 		this->size = building->size;
-
-	ProjectileInst.effectType = building->ProjectileInst.effectType;
-	BuildingType = building->BuildingType;
-	EffectType = building->EffectType;
+	
 	Cost = building->Cost;
 
 	std::map<std::string, SoundComponent*>::iterator it;

@@ -3,7 +3,6 @@
 #include "Soldier.h"
 
 
-
 class LoaderManager {
 public:
 	/*
@@ -12,10 +11,10 @@ public:
 	*/
 	std::vector<Building*> buildings;
 	std::vector<Soldier*> soldiers;
-	std::vector<Effect*> effects {
+	std::vector<Effect*> effects{
 		new Fire()
 	};
-	
+
 	void loadBuildings();
 	void loadSoliders();
 	Building* getBuilding(std::string name);

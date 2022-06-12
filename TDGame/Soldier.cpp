@@ -1,4 +1,3 @@
-#include <iostream>
 #include "Soldier.h"
 #include "LoaderManager.h"
 
@@ -9,10 +8,19 @@ void Soldier::EntityLogic(double Deltatime)
 
 	//If the soldier has an effect
 	if (currentEffect != nullptr) {
-		if (currentEffect->duration < effectDuration) {
+		if (currentEffect->duration > effectDuration) {
 			effectDuration += Deltatime;
 
-			currentEffect->apply(this);
+			if (currentEffect->delay < effectDelay) {
+				currentEffect->apply(this);
+			} else {
+				effectDelay += Deltatime;
+			}
+		} else {
+			currentEffect->onFinish(this);
+			currentEffect = nullptr;
+			effectDuration = 0;
+			effectDelay = 0;
 		}
 	}
 
@@ -38,9 +46,6 @@ void Soldier::EntityLogic(double Deltatime)
 	{
 
 		//move
-
-
-
 		Loc = (Loc + FindLookAtVector(Target) * (float)Deltatime * Speed);
 
 	}
@@ -79,6 +84,7 @@ Soldier::Soldier(std::string name, int health, int attack, int size, float attac
 void Soldier::setCurrentEffect(Effect* effect) {
 	this->currentEffect = effect;
 	this->effectDuration = 0;
+	this->effectDelay = 0;
 }
 
 Soldier::~Soldier()

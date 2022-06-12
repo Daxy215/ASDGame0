@@ -102,45 +102,6 @@ void GameInstance::HandleButtons(double DeltaTime)
                         //play sound here
                     }
                 }
-
-                /* if (CurrentPlaceObject == "StandardTower")
-                {
-                    if (Gold >= 100 && Building::NotWithinBuilding(GameData::Buildings, (sf::Vector2f)sf::Mouse::getPosition() / Camera::Zoom - Camera::Location))
-                    {
-                        GameData::Buildings.push_back(new Building(CurrentPlaceObject, (sf::Vector2f)sf::Mouse::getPosition() / Camera::Zoom - Camera::Location));
-                        Gold -= 100;
-                        CurrentPlaceObject = "";
-                    }
-                    else
-                    {
-                        //play sound here
-                    }
-
-                }
-
-
-
-                //can only build mines on dirt
-                if (CurrentPlaceObject == "Mine")
-                {
-                    if (Gold >= 150 && Terrain::GetGroundTypeAtMouse() == GroundType::Dirt1 && Building::NotWithinBuilding(GameData::Buildings, (sf::Vector2f)sf::Mouse::getPosition() / Camera::Zoom - Camera::Location))
-                    {
-                        GameData::Mines.push_back(new Building(CurrentPlaceObject, (sf::Vector2f)sf::Mouse::getPosition() / Camera::Zoom - Camera::Location));
-                        Gold -= 150;
-                        CurrentPlaceObject = "";
-                    }
-                }
-
-                if (CurrentPlaceObject == "Mage")
-                {
-                    if (Gold >= 150 && Building::NotWithinBuilding(GameData::Buildings, (sf::Vector2f)sf::Mouse::getPosition() / Camera::Zoom - Camera::Location))
-                    {
-                        GameData::Buildings.push_back(new Building(CurrentPlaceObject, (sf::Vector2f)sf::Mouse::getPosition() / Camera::Zoom - Camera::Location));
-                        Gold -= 150;
-                        CurrentPlaceObject = "";
-                    }
-                }*/
-
             }
 
         }
@@ -198,11 +159,17 @@ void GameInstance::ProjectileCollision(Projectile* inst)
 
             i->Health -= inst->Damage;
 
+            if (inst->effectType.length() != 0) {
+                i->setCurrentEffect(getLoaderManager().getEffects(inst->effectType));
+            }
+
             if (i->Health <= 0)
             {
-
-
                 Soldier* t1 = i;
+
+                //if (i->currentEffect != nullptr) {
+                //    i->currentEffect->onFinish(i);
+                //}
 
                 //cleanup
                 Soldiers.erase(std::remove(Soldiers.begin(), Soldiers.end(), i), Soldiers.end());

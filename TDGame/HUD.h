@@ -39,6 +39,8 @@ public:
 	
 	static sf::Font* GenericFont;
 	
+	static void LoadFont();
+
 };
 
 
@@ -63,6 +65,7 @@ struct VButton : public Button
 		text.setString(textIn);
 		text.setFont(*GenericFont);
 		text.setPosition((sf::Vector2f)TL);
+		text.setCharacterSize(22);
 	}
 
 

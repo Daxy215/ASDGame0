@@ -685,7 +685,7 @@ void GameInstance::GameLoop()
 
 }
 
-GameInstance::GameInstance()
+GameInstance::GameInstance(std::string MapSource)
 {
 
     srand(std::time(0));
@@ -694,9 +694,9 @@ GameInstance::GameInstance()
 
 
     config = getConfiguration();
-    TerrainData = new Terrain();
+    TerrainData = new Terrain(MapSource);
 
-    window = new sf::RenderWindow(sf::VideoMode(config.ScreenX, config.ScreenY), "TD Game");
+    window = new sf::RenderWindow(sf::VideoMode(config.ScreenX, config.ScreenY), "TD Game", sf::Style::Fullscreen);
 
 
 

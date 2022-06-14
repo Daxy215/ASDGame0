@@ -29,7 +29,7 @@ void Terrain::CreateBlankMap()
 
 
 
-Terrain::Terrain()
+Terrain::Terrain(std::string source)
 {
 	 //allow for other maps to be loaded
 
@@ -67,7 +67,7 @@ Terrain::Terrain()
 
 
 
-	LoadMap("Default.png");
+	LoadMap(source);
 
 }
 

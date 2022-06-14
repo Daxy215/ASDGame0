@@ -34,6 +34,20 @@ void Entity::RenderEntity(sf::RenderWindow* window, double DeltaTime)
 	{
 		i.second->AudioLogic(Loc);
 	}
+
+	size_t idx = 0;
+	for (ParticleFX* i: ParticleComponents)
+	{
+		i->Render(window,Loc,DeltaTime);
+		if (i->Lifetime<0)
+		{
+			ParticleFX* tmp = i;
+			ParticleComponents.erase(ParticleComponents.begin()+idx);
+			delete tmp;
+		}
+		idx++;
+	}
+
 	
 }
 

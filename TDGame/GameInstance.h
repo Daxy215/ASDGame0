@@ -15,7 +15,7 @@
 class GameInstance
 {
 public:
-	GameInstance();
+	GameInstance(std::string MapSource);
 	void GameLoop();
 	void LoadGame();
 	void RenderEntity(Entity* entity);

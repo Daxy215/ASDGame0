@@ -30,7 +30,7 @@ class Terrain
 	static int GridSize;
 
 public:
-	Terrain();
+	Terrain(std::string source);
 	void RenderTerrain(sf::RenderWindow* window);
 	void LoadMap(std::string name);
 

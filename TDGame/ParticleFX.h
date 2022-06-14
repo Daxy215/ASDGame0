@@ -22,6 +22,7 @@ struct Shape
 {
 	sf::Sprite* s;
 	sf::Vector2f Velocity = sf::Vector2f(0,0);
+	sf::Vector2f Loc = sf::Vector2f(0,0);
 	float RemainingTime;
 
 	Shape(float rt, sf::Vector2f v)
@@ -42,10 +43,11 @@ public:
 	
 	std::vector<Shape*> Shapes;
 
-	sf::Vector2f Loc = sf::Vector2f(300,300);
+	sf::Vector2f Loc = sf::Vector2f(0,0);
 
 
 	float Lifetime;
+	float Spawningstop;
 	
 	ParticleTemplate Template;
 	float SpawnShapeTime;
@@ -54,6 +56,7 @@ public:
 	void Render(sf::RenderWindow* window, sf::Vector2f RenderLoc, double DeltaTime);
 
 	ParticleFX(std::string name);
+
 
 private:
 	float SpawnShapeTimeRemain;

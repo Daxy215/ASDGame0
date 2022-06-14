@@ -4,16 +4,19 @@
 #include "Editor.h"
 #include "LoaderManager.h"
 
+
+
 int main() {
 	int choice = 0;
-	//MainMenu* Menu = new MainMenu();
-	//choice = Menu->MenuLoop();
+	Button::LoadFont();
+	MainMenu* Menu = new MainMenu();
+	choice = Menu->MenuLoop();
 
 
 	ConfigData conf = getConfiguration();
+	
 
-
-	choice = conf.Choice;//temp
+	//choice = conf.Choice;//temp
 
 	if (choice == 0) {
 		Anim::LoadAllAnims();
@@ -22,9 +25,13 @@ int main() {
 		getLoaderManager().loadBuildings();
 		getLoaderManager().loadSoliders();
 		
-		GameInstance* Game = new GameInstance();
+		GameInstance* Game = new GameInstance(GameMap::ChosenMap);
 		Game->GameLoop();
 	}
+
+	
+	
+
 
 	if (choice == 1) {
 		Anim::LoadAllAnims();
@@ -33,7 +40,7 @@ int main() {
 		getLoaderManager().loadBuildings();
 		getLoaderManager().loadSoliders();
 
-		GameInstance* Game = new GameInstance();
+		GameInstance* Game = new GameInstance(GameMap::ChosenMap);
 		Game->LoadGame();
 		Game->GameLoop();
 	}

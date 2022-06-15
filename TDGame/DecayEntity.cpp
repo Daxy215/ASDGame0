@@ -15,4 +15,5 @@ DecayEntity::DecayEntity(std::string inName, float time, sf::Vector2f inLoc) : E
 	Loc = inLoc;
 	RemainingTime = time;
 	Components.push_back(new Component(inName));
+	ParticleComponents.push_back(new ParticleFX("Blood"));
 }

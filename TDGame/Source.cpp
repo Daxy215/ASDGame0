@@ -24,6 +24,7 @@ int main() {
 		Building::LoadAllBuildings();
 		getLoaderManager().loadBuildings();
 		getLoaderManager().loadSoliders();
+		getLoaderManager().loadWaves();
 		
 		GameInstance* Game = new GameInstance(GameMap::ChosenMap);
 		Game->GameLoop();
@@ -39,7 +40,8 @@ int main() {
 		Building::LoadAllBuildings();
 		getLoaderManager().loadBuildings();
 		getLoaderManager().loadSoliders();
-
+		getLoaderManager().loadWaves();
+	
 		GameInstance* Game = new GameInstance(GameMap::ChosenMap);
 		Game->LoadGame();
 		Game->GameLoop();

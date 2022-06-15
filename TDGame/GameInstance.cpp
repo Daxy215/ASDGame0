@@ -218,7 +218,15 @@ void GameInstance::FindBuildingtoAttack(Soldier* inst)
 
 void GameInstance::SpawnEnemies()
 {
-    Soldiers.push_back(new Soldier("Grunt", sf::Vector2f(std::rand() % 2000 - 1000, std::rand() % 2000 - 1000), Town));
+    std::vector<Wave*> waves = getLoaderManager().getWaves();
+
+    int waveNum = rand() % (waves.size());
+
+    for (int i = 0; i < waves[waveNum]->soldiers.size(); i++) {
+        Soldiers.push_back(new Soldier(waves[waveNum]->soldiers[i]->Name, sf::Vector2f(std::rand() % 2000 - 1000, std::rand() % 2000 - 1000), Town));
+    }
+
+    /*Soldiers.push_back(new Soldier("Grunt", sf::Vector2f(std::rand() % 2000 - 1000, std::rand() % 2000 - 1000), Town));
     Soldiers.push_back(new Soldier("Grunt", sf::Vector2f(std::rand() % 2000 - 1000, std::rand() % 2000 - 1000), Town));
     Soldiers.push_back(new Soldier("Grunt", sf::Vector2f(std::rand() % 2000 - 1000, std::rand() % 2000 - 1000), Town));
     Soldiers.push_back(new Soldier("Grunt", sf::Vector2f(std::rand() % 2000 - 1000, std::rand() % 2000 - 1000), Town));
@@ -284,7 +292,7 @@ void GameInstance::SpawnEnemies()
         Soldiers.push_back(new Soldier("Knight", sf::Vector2f(std::rand() % 3000 - 1500, std::rand() % 3000 - 1500), nullptr));
         Soldiers.push_back(new Soldier("Knight", sf::Vector2f(std::rand() % 3000 - 1500, std::rand() % 3000 - 1500), nullptr));
     }
-
+    */
 }
 
 void GameInstance::SaveGame()
@@ -542,8 +550,11 @@ void GameInstance::GameLoop()
         }
 
 
-        for (Entity* i : Entity::StaticEntities)
+        for(int j = 0; j < Entity::StaticEntities.size(); j++)
+        //for (Entity* i : Entity::StaticEntities)
         {
+            Entity* i = Entity::StaticEntities[j];
+
             if ((DecayEntity*)i)
             {
                 DecayEntity* tmpDE = (DecayEntity*)i;
@@ -696,7 +707,7 @@ GameInstance::GameInstance(std::string MapSource)
     config = getConfiguration();
     TerrainData = new Terrain(MapSource);
 
-    window = new sf::RenderWindow(sf::VideoMode(config.ScreenX, config.ScreenY), "TD Game", sf::Style::Fullscreen);
+    window = new sf::RenderWindow(sf::VideoMode(config.ScreenX, config.ScreenY), "TD Game"/*, sf::Style::Fullscreen*/);
 
 
 

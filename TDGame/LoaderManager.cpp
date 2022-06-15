@@ -102,8 +102,8 @@ void LoaderManager::loadWaves() {
 		Wave* wave = new Wave(waveName);
 
 		//Loop through all of the enemies in the waves
-		for (Json::Value::const_iterator itr = cfg_root[waveName]["Soldiers"].begin(); itr != cfg_root[waveName]["Soldiers"].end(); itr++) {
-			std::string soldierName = itr.name();
+		for (Json::Value::const_iterator it = cfg_root[waveName]["Soldiers"].begin(); it != cfg_root[waveName]["Soldiers"].end(); it++) {
+			std::string soldierName = it.name();
 
 			Soldier* soldier = getSoldier(soldierName);
 
@@ -115,17 +115,15 @@ void LoaderManager::loadWaves() {
 
 			int amount = cfg_root[waveName]["Soldiers"][soldierName].asInt();
 
-			wave->soldiers.push_back(soldier);
+			for(int i = 0; i < amount; i++)
+				wave->soldiers.push_back(soldier);
 		}
 
-		for (Json::Value::const_iterator itr = cfg_root[waveName]["Conditions"].begin(); itr != cfg_root[waveName]["Conditions"].end(); itr++) {
-			std::string condition = itr.name();
+		for (Json::Value::const_iterator its = cfg_root[waveName]["Conditions"].begin(); its != cfg_root[waveName]["Conditions"].end(); its++) {
+			std::string condition = its.name();
 			int amount = cfg_root[waveName]["Conditions"][condition].asInt();
 
-			Condition* co = new Condition(condition, amount);
-			std::cout << "con: " << condition << " - " << co->condition << std::endl;
-			
-			wave->conditions.push_back(co);
+			wave->conditions.push_back(new Condition(condition, amount));
 		}
 
 		waves.push_back(wave);
@@ -175,14 +173,12 @@ std::vector<Wave*> LoaderManager::getWaves() {
 			std::string condition = waves[i]->conditions[j]->name;
 			int amount = waves[i]->conditions[j]->condition;
 
-			std::cout << "Condition " << condition << " - " << amount << std::endl;
-			
 			//Check for condition
 			if (condition == "Buildings") {
-				if (GameData::Buildings.size() > amount) conditionsMet = false;
+				if (GameData::Buildings.size() < amount) conditionsMet = false;
 			}
 			else if (condition == "Mines") {
-				if (GameData::Mines.size() > amount) conditionsMet = false;
+				if (GameData::Mines.size() < amount) conditionsMet = false;
 			} //else if (condition == "Gold") {
 				//if (GameInstance::Gold != amount) conditionsMet = false;
 			//} 

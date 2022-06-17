@@ -7,11 +7,14 @@ void HUD::Render(sf::RenderWindow* window, int money)
 	MoneyTest.setString("Gold: "+std::to_string(money));
 	window->draw(MoneyTest);
 	window->draw(BaseSprite);
-	StandardTowerButton.Render(window);
-	MineButton.Render(window);
-	MageButton.Render(window);
+	//StandardTowerButton.Render(window);
+	//MineButton.Render(window);
+	//MageButton.Render(window);
 	PauseButton.Render(window);
 
+	for (int i = 0; i < buildingsButtons.size(); i++) {
+		buildingsButtons[i].Render(window);
+	}
 }
 
 int HUD::PauseMenu(sf::RenderWindow* window)
@@ -55,6 +58,19 @@ int HUD::PauseMenu(sf::RenderWindow* window)
 
 sf::Font* Button::GenericFont;
 
+
+void Button::LoadFont()
+{
+	sf::Font* font = new sf::Font();
+	if (!font->loadFromFile("Data/UI/UI.ttf"))
+	{
+		// error...
+	}
+	Button::GenericFont = font;
+
+}
+
+
 HUD::HUD()
 {
 
@@ -62,12 +78,7 @@ HUD::HUD()
 
 
 
-	sf::Font* font = new sf::Font();
-	if (!font->loadFromFile("Data/UI/UI.ttf"))
-	{
-		// error...
-	}
-	Button::GenericFont = font;
+
 
 
 
@@ -83,7 +94,7 @@ HUD::HUD()
 	float ScaleX = (float)Config.ScreenX / UIT->getSize().x;
 	float ScaleY = (float)Config.ScreenY / UIT->getSize().y;
 
-	MoneyTest.setFont(*font);
+	MoneyTest.setFont(*Button::GenericFont);
 	MoneyTest.setPosition(((float)Config.ScreenX) / 100 + ScaleX*200, ((float)Config.ScreenY) / 100);
 
 	sf::Texture* UITower = new sf::Texture();

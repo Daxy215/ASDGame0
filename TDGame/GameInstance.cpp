@@ -38,16 +38,24 @@ void GameInstance::SetObjectToMage()
 //Also does the mouse
 void GameInstance::HandleButtons(double DeltaTime)
 {
-    //if (!CurrentPlaceObject.empty()) {
+    if(UI->buildingsButtons.size() == 0) {
+        for (int i = 0; i < getLoaderManager().buildings.size(); i++) {
+            if (getLoaderManager().buildings[i]->Name == "TownCentre")
+                continue;
 
-    //}
 
+            VButton b = VButton(sf::Vector2i(475 * i, 815), sf::Vector2i(475 * (i + 1), 1080), "UI" + getLoaderManager().buildings[i]->ComponentName + ".png");
+            //Just using it to get the building name :)
+            b.text.setString(getLoaderManager().buildings[i]->Name);
 
+            UI->buildingsButtons.push_back(b);
+        }
+    }
 
     if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && MouseCooldown <= 0)
     {
         MouseCooldown = 0.1;
-        if (UI->StandardTowerButton.CallIfHovered())
+        /*if (UI->StandardTowerButton.CallIfHovered())
         {
             SetObjectToTower();
             curBuilding = getLoaderManager().getBuilding(CurrentPlaceObject);
@@ -61,8 +69,24 @@ void GameInstance::HandleButtons(double DeltaTime)
         {
             SetObjectToMage();
             curBuilding = getLoaderManager().getBuilding(CurrentPlaceObject);
+        }*/
+
+        bool isHovered = false;
+
+        for (int i = 0; i < UI->buildingsButtons.size(); i++) {
+            if (UI->buildingsButtons[i].CallIfHovered()) {
+                isHovered = true;
+
+                //std::cout << "[DEBUG] Pressed " << UI->buildingsButtons[i].text.getString().toUtf8().c_str() << std::endl;
+                CurrentPlaceObject = UI->buildingsButtons[i].text.getString();
+                curBuilding = getLoaderManager().getBuilding(CurrentPlaceObject);
+            }
         }
-        else if (UI->PauseButton.CallIfHovered())
+
+        if (isHovered)
+            return;
+
+        if (UI->PauseButton.CallIfHovered())
         {
             int tempPause = UI->PauseMenu(window);
             if (tempPause==1)
@@ -218,7 +242,15 @@ void GameInstance::FindBuildingtoAttack(Soldier* inst)
 
 void GameInstance::SpawnEnemies()
 {
-    Soldiers.push_back(new Soldier("Grunt", sf::Vector2f(std::rand() % 2000 - 1000, std::rand() % 2000 - 1000), Town));
+    std::vector<Wave*> waves = getLoaderManager().getWaves();
+
+    int waveNum = rand() % (waves.size());
+
+    for (int i = 0; i < waves[waveNum]->soldiers.size(); i++) {
+        Soldiers.push_back(new Soldier(waves[waveNum]->soldiers[i]->Name, sf::Vector2f(std::rand() % 2000 - 1000, std::rand() % 2000 - 1000), Town));
+    }
+
+    /*Soldiers.push_back(new Soldier("Grunt", sf::Vector2f(std::rand() % 2000 - 1000, std::rand() % 2000 - 1000), Town));
     Soldiers.push_back(new Soldier("Grunt", sf::Vector2f(std::rand() % 2000 - 1000, std::rand() % 2000 - 1000), Town));
     Soldiers.push_back(new Soldier("Grunt", sf::Vector2f(std::rand() % 2000 - 1000, std::rand() % 2000 - 1000), Town));
     Soldiers.push_back(new Soldier("Grunt", sf::Vector2f(std::rand() % 2000 - 1000, std::rand() % 2000 - 1000), Town));
@@ -284,7 +316,7 @@ void GameInstance::SpawnEnemies()
         Soldiers.push_back(new Soldier("Knight", sf::Vector2f(std::rand() % 3000 - 1500, std::rand() % 3000 - 1500), nullptr));
         Soldiers.push_back(new Soldier("Knight", sf::Vector2f(std::rand() % 3000 - 1500, std::rand() % 3000 - 1500), nullptr));
     }
-
+    */
 }
 
 void GameInstance::SaveGame()
@@ -542,8 +574,11 @@ void GameInstance::GameLoop()
         }
 
 
-        for (Entity* i : Entity::StaticEntities)
+        for(int j = 0; j < Entity::StaticEntities.size(); j++)
+        //for (Entity* i : Entity::StaticEntities)
         {
+            Entity* i = Entity::StaticEntities[j];
+
             if ((DecayEntity*)i)
             {
                 DecayEntity* tmpDE = (DecayEntity*)i;
@@ -685,7 +720,7 @@ void GameInstance::GameLoop()
 
 }
 
-GameInstance::GameInstance()
+GameInstance::GameInstance(std::string MapSource)
 {
 
     srand(std::time(0));
@@ -694,9 +729,9 @@ GameInstance::GameInstance()
 
 
     config = getConfiguration();
-    TerrainData = new Terrain();
+    TerrainData = new Terrain(MapSource);
 
-    window = new sf::RenderWindow(sf::VideoMode(config.ScreenX, config.ScreenY), "TD Game");
+    window = new sf::RenderWindow(sf::VideoMode(config.ScreenX, config.ScreenY), "TD Game"/*, sf::Style::Fullscreen*/);
 
 
 

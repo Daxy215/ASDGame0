@@ -39,6 +39,8 @@ public:
 	
 	static sf::Font* GenericFont;
 	
+	static void LoadFont();
+
 };
 
 
@@ -63,6 +65,7 @@ struct VButton : public Button
 		text.setString(textIn);
 		text.setFont(*GenericFont);
 		text.setPosition((sf::Vector2f)TL);
+		text.setCharacterSize(22);
 	}
 
 
@@ -136,6 +139,7 @@ public:
 
 	HUD();
 	void Render(sf::RenderWindow* window, int money);
+	std::vector<VButton> buildingsButtons;
 	VButton StandardTowerButton = VButton(sf::Vector2i(0,815),sf::Vector2i(475,1080),"UITower.png");
 	VButton MineButton = VButton(sf::Vector2i(475, 815), sf::Vector2i(975, 1080), "UIMine.png");
 	VButton MageButton = VButton(sf::Vector2i(975, 815), sf::Vector2i(1460, 1080), "UIMage.png");

@@ -2,9 +2,6 @@
     "StandardTower" : {
         "ComponentName": "StandardTower",
         "BuildingType": "Tower",
-
-        "EffectType": "Fire",
-
         "Damage": 15,
         "Speed": 700,
         "TimeExists": 4,
@@ -16,30 +13,30 @@
         "Cost": 100,
         
         "Audios" : {
-
-            "Fire" : {
+          "Fire" : {
             "SoundComponent": "ArrowFire"
           }
-        },
-
-        "Upgrades" : {
-          "Level2": {
-            "Damage": 20,
-            "Health": 130,
-            "Cost": 150
-          },
-          "Level3": {
-            "Damage": 25,
-            "Health": 135,
-            "Cost": 155
-          },
-          "Level4": {
-            "Speed": 50,
-            "Cost": 150
-          }
         }
-
     },
+    "AdvancedStandardTower" : {
+      "ComponentName": "AdvancedTower",
+      "BuildingType": "Tower",
+      "Damage": 35,
+      "Speed": 750,
+      "TimeExists": 5,
+      "TimeGap": 0.65,
+      "AttackDelay": 0.5,
+      "Health": 150,
+      "Size": 50,
+      "Range": 800,
+      "Cost": 150,
+      
+      "Audios" : {
+        "Fire" : {
+          "SoundComponent": "ArrowFire"
+        }
+      }
+  },
     "TownCentre" : {
         "ComponentName": "",
         "BuildingType": "Tower",
@@ -54,12 +51,10 @@
         "Cost": 100,
         
         "Audios" : {
-
-			"Fire" : {
-				"SoundComponent": "ArrowFire"
-			}
-		}
-
+          "Fire" : {
+            "SoundComponent": "ArrowFire"
+          }
+        }
     },
     "Mine" : {
         "ComponentName": "Mine",
@@ -75,12 +70,10 @@
         "Cost": 150,
 
         "Audios" : {
-
-			"Fire" : {
-				"SoundComponent": "ArrowFire"
-			}
-		}
-
+          "Fire" : {
+            "SoundComponent": "ArrowFire"
+          }
+        }
     },
     "Mage" : {
         "ComponentName": "MageTower",
@@ -96,11 +89,9 @@
         "Cost": 150,
         
         "Audios" : {
-
-			"Fire" : {
-				"SoundComponent": "MagicFire"
-			}
-		}
-
+		    	"Fire" : {
+            "SoundComponent": "MagicFire"
+          }
+        }
     }
 }

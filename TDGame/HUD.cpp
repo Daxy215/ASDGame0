@@ -55,6 +55,19 @@ int HUD::PauseMenu(sf::RenderWindow* window)
 
 sf::Font* Button::GenericFont;
 
+
+void Button::LoadFont()
+{
+	sf::Font* font = new sf::Font();
+	if (!font->loadFromFile("Data/UI/UI.ttf"))
+	{
+		// error...
+	}
+	Button::GenericFont = font;
+
+}
+
+
 HUD::HUD()
 {
 
@@ -62,12 +75,7 @@ HUD::HUD()
 
 
 
-	sf::Font* font = new sf::Font();
-	if (!font->loadFromFile("Data/UI/UI.ttf"))
-	{
-		// error...
-	}
-	Button::GenericFont = font;
+
 
 
 
@@ -83,7 +91,7 @@ HUD::HUD()
 	float ScaleX = (float)Config.ScreenX / UIT->getSize().x;
 	float ScaleY = (float)Config.ScreenY / UIT->getSize().y;
 
-	MoneyTest.setFont(*font);
+	MoneyTest.setFont(*Button::GenericFont);
 	MoneyTest.setPosition(((float)Config.ScreenX) / 100 + ScaleX*200, ((float)Config.ScreenY) / 100);
 
 	sf::Texture* UITower = new sf::Texture();

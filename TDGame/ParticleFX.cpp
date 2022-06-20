@@ -11,11 +11,14 @@
 void ParticleFX::Render(sf::RenderWindow* window, sf::Vector2f RenderLoc, double DeltaTime)
 {
 
+	Loc = (RenderLoc + Camera::Location)* Camera::Zoom;
 	int idx = 0;
 	for (Shape* i : Shapes)
 	{
+
+		i->Loc = i->Loc + (i->Velocity * (float)DeltaTime);
 		window->draw(*i->s);
-		i->s->setPosition(i->s->getPosition()+(i->Velocity*(float)DeltaTime));
+		i->s->setPosition(Loc+i->Loc);
 		i->RemainingTime -= DeltaTime;
 		i->s->setScale(i->s->getScale()+i->s->getScale()*(float)DeltaTime*Template.DeltaSize);
 		i->Velocity = (i->Velocity + i->Velocity * (float)DeltaTime*Template.DeltaVelocity);
@@ -35,7 +38,7 @@ void ParticleFX::Render(sf::RenderWindow* window, sf::Vector2f RenderLoc, double
 		
 	}
 	
-	if (SpawnShapeTimeRemain<=0)
+	if (SpawnShapeTimeRemain<=0 && Spawningstop>0)
 	{
 		
 		SpawnShapeTimeRemain = SpawnShapeTime + Utils::RandomFloatInRange(SpawnShapeTimeVariance);
@@ -53,7 +56,7 @@ void ParticleFX::Render(sf::RenderWindow* window, sf::Vector2f RenderLoc, double
 		Shapes.back()->s = new sf::Sprite();
 		Shapes.back()->s->setScale(sf::Vector2f(Template.Size,Template.Size));
 		Shapes.back()->s->setColor(Template.Colour);
-		Shapes.back()->s->setPosition(Loc+ sf::Vector2f(Utils::RandomFloatInRange(Template.LocVariance), Utils::RandomFloatInRange(Template.LocVariance)));
+		
 		Shapes.back()->s->setTexture(*Anim::Animations.at(Template.ShapeType)->GetDefaultFrame());
 		Shapes.back()->s->setOrigin(sf::Vector2f(Shapes.back()->s->getLocalBounds().width/2,Shapes.back()->s->getLocalBounds().height/2));
 		if (Template.RandomRotation)
@@ -68,6 +71,7 @@ void ParticleFX::Render(sf::RenderWindow* window, sf::Vector2f RenderLoc, double
 	}
 
 	Lifetime -= DeltaTime;
+	Spawningstop -= DeltaTime;
 	PendingDelete = Lifetime < 0;
 
 
@@ -77,7 +81,6 @@ void ParticleFX::Render(sf::RenderWindow* window, sf::Vector2f RenderLoc, double
 ParticleFX::ParticleFX(std::string name)
 {
 
-
 	Json::Value cfg_root = "";
 	std::ifstream cfgfile("Data/Particles/"+name+".json");
 
@@ -86,6 +89,7 @@ ParticleFX::ParticleFX(std::string name)
 
 
 		Lifetime = cfg_root["lifetime"].asFloat();
+		Spawningstop = cfg_root["spawnstop"].asFloat();
 		SpawnShapeTime = cfg_root["spawntime"].asFloat();
 		SpawnShapeTimeVariance = cfg_root["spawnvariance"].asFloat();
 		RandomVelocity = cfg_root["randomvelocity"].asBool();

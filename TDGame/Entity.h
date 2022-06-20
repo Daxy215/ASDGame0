@@ -2,7 +2,7 @@
 #include<iostream>
 #include "Component.h"
 #include "SoundData.h"
-
+#include "ParticleFX.h"
 
 class Entity
 {
@@ -29,6 +29,7 @@ public:
 
 	std::vector<Component*> Components;
 	std::map<std::string, SoundComponent*> AudioComponents; 
+	std::vector<ParticleFX*> ParticleComponents;
 	
 	bool PendingDelete = false;
 

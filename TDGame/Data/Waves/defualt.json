@@ -1,0 +1,17 @@
+{
+    "0" : {
+        "Soldiers" : {
+            "Grunt": 5
+        }
+    },
+    "1" : {
+        "Soldiers" : {
+            "Grunt": 15,
+            "Giant": 20
+        },
+        
+        "Conditions" : {
+            "Mines": 2
+        }
+    }
+}
